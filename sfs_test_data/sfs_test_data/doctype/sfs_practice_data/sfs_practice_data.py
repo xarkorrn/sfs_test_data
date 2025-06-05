@@ -54,7 +54,8 @@ def create_po(supplier, transaction_date=datetime.today(), desired_status='Draft
 	for dimension in dimensions:
 		# get all of the possible dimension values
 		values = frappe.get_all(dimension.document_type)
-		setattr(po, dimension.fieldname, random.choice(values).name)
+		if (len(values) > 0):
+			setattr(po, dimension.fieldname, random.choice(values).name)
 	
 	# was a date provided?
 	po.transaction_date = transaction_date
@@ -103,7 +104,8 @@ def create_so(customer, transaction_date=datetime.today(), desired_status='Draft
 	for dimension in dimensions:
 		# get all of the possible dimension values
 		values = frappe.get_all(dimension.document_type)
-		setattr(so, dimension.fieldname, random.choice(values).name)
+		if (len(values) > 0):
+			setattr(po, dimension.fieldname, random.choice(values).name)
 	
 	# shuffle the products
 	random.shuffle(products)
