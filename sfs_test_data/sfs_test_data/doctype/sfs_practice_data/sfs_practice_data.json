@@ -9,10 +9,19 @@
   "section_break_efl9",
   "amended_from",
   "purchase_orders_section",
-  "tag_name",
-  "number_to_generate",
-  "chance_per_item",
-  "desired_purchase_status"
+  "po_number_to_generate",
+  "supplier",
+  "po_date",
+  "desired_purchase_status",
+  "sales_orders_section",
+  "so_number_to_generate",
+  "customer",
+  "so_date",
+  "desired_sale_status",
+  "column_break_hger",
+  "max_so_item_variety",
+  "max_so_item_qty",
+  "so_markup"
  ],
  "fields": [
   {
@@ -30,46 +39,100 @@
    "search_index": 1
   },
   {
-   "default": "5",
-   "fieldname": "number_to_generate",
+   "fieldname": "purchase_orders_section",
+   "fieldtype": "Section Break",
+   "label": "Purchase Orders"
+  },
+  {
+   "default": "0",
+   "fieldname": "po_number_to_generate",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Number To Generate",
    "reqd": 1
   },
   {
-   "default": "example",
-   "fieldname": "tag_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Tag Name",
-   "reqd": 1
-  },
-  {
-   "default": "30",
-   "fieldname": "chance_per_item",
-   "fieldtype": "Data",
-   "label": "% Chance Per Additional Items",
-   "reqd": 1
-  },
-  {
-   "fieldname": "purchase_orders_section",
-   "fieldtype": "Section Break",
-   "label": "Purchase Orders"
-  },
-  {
    "default": "Draft",
    "fieldname": "desired_purchase_status",
    "fieldtype": "Select",
    "label": "Desired Purchase Status",
-   "options": "Draft\nSubmitted\nBill\nPay\nRandom"
+   "options": "Draft\nSubmitted\nBill\nPay\nRandom",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_orders_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Orders"
+  },
+  {
+   "default": "0",
+   "fieldname": "so_number_to_generate",
+   "fieldtype": "Data",
+   "label": "Number To Generate",
+   "reqd": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "desired_sale_status",
+   "fieldtype": "Select",
+   "label": "Desired Sale Status",
+   "options": "Draft",
+   "reqd": 1
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier",
+   "placeholder": "If not selected, choices will be random"
+  },
+  {
+   "fieldname": "po_date",
+   "fieldtype": "Date",
+   "label": "PO Date"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "placeholder": "If left blank, random Customers will be chosen"
+  },
+  {
+   "fieldname": "so_date",
+   "fieldtype": "Date",
+   "label": "SO Date"
+  },
+  {
+   "fieldname": "column_break_hger",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "3",
+   "fieldname": "max_so_item_variety",
+   "fieldtype": "Int",
+   "label": "Max SO Item Variety",
+   "reqd": 1
+  },
+  {
+   "default": "5",
+   "fieldname": "max_so_item_qty",
+   "fieldtype": "Int",
+   "label": "Max SO Item Qty",
+   "reqd": 1
+  },
+  {
+   "default": "15",
+   "fieldname": "so_markup",
+   "fieldtype": "Percent",
+   "label": "SO Markup %"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-16 03:28:28.522537",
+ "modified": "2025-06-05 00:22:12.470744",
  "modified_by": "Administrator",
  "module": "SFS Test Data",
  "name": "SFS Practice Data",

@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SFS-TCONVERT-{####}",
+ "creation": "2025-06-03 03:44:18.781402",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_4tge",
+  "amended_from",
+  "types_to_convert_section",
+  "po",
+  "so"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_4tge",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "SFS Template Converter",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "types_to_convert_section",
+   "fieldtype": "Section Break",
+   "label": "Types to Convert"
+  },
+  {
+   "default": "0",
+   "fieldname": "po",
+   "fieldtype": "Check",
+   "label": "PO"
+  },
+  {
+   "default": "0",
+   "fieldname": "so",
+   "fieldtype": "Check",
+   "label": "SO"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-06-03 11:14:24.496076",
+ "modified_by": "Administrator",
+ "module": "SFS Test Data",
+ "name": "SFS Template Converter",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}
