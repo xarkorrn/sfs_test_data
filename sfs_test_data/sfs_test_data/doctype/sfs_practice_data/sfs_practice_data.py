@@ -135,7 +135,7 @@ class SFSPracticeData(Document):
 				supplier_item_names = []
 				if self.supplier is not None:
 					supplier = self.supplier
-					supplier_item_names = frappe.get_all('Item Supplier', fields=['parent'], filters={'supplier':self.supplier})
+					supplier_item_names = frappe.get_all('Item Supplier', fields=['parent'], filters={'supplier':self.supplier, 'has_variants':0})
 					# if the supplier given doesn't have item associations, throw an error
 					if len(supplier_item_names) == 0:
 						raise Exception("Selected Supplier has no Item associations")
