@@ -12,6 +12,7 @@
   "project_name",
   "number_to_generate",
   "customer",
+  "cost_center",
   "start_date",
   "max_item_variety",
   "max_item_qty",
@@ -83,13 +84,20 @@
    "fieldname": "markup",
    "fieldtype": "Percent",
    "label": "Markup"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-06-09 12:30:04.476913",
+ "modified": "2025-06-10 12:19:03.236553",
  "modified_by": "Administrator",
  "module": "SFS Test Data",
  "name": "SFS Historical Data Generator",

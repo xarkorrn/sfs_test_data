@@ -11,7 +11,11 @@ from erpnext.selling.doctype.sales_order.sales_order import make_purchase_order,
 from erpnext.accounts.doctype.payment_request.payment_request import make_payment_request, make_payment_entry
 from erpnext.buying.doctype.purchase_order.purchase_order import make_purchase_invoice, make_purchase_receipt
 
-def create_historical_data(project, customer, max_item_variety, max_item_qty, markup, start_date):
+def get_random_cost_center():
+	centers = frappe.get_all('Cost Center')
+	return random.choice(centers).name
+
+def create_historical_data(project, customer, max_item_variety, max_item_qty, markup, start_date, cost_center):
 	# Create Quote
 		quote = frappe.new_doc("Quotation")
 		quote.party_name = customer.name
@@ -47,6 +51,16 @@ def create_historical_data(project, customer, max_item_variety, max_item_qty, ma
 			sales_order.project = project.name
 		sales_order.transaction_date = getdate(start_date)
 		sales_order.delivery_date = sales_order.transaction_date + timedelta(days=7)
+		
+		# Handle Accounting Dimensions
+		sales_order.cost_center = cost_center
+		dimensions = frappe.get_all('Accounting Dimension', fields=['*'])
+		# set a value for each dimension
+		for dimension in dimensions:
+			# get all of the possible dimension values
+			values = frappe.get_all(dimension.document_type)
+			if (len(values) > 0):
+				setattr(sales_order, dimension.fieldname, random.choice(values).name)
 		sales_order.insert()
 		sales_order.submit()
 		sales_invoice = make_sales_invoice(sales_order.name)
@@ -80,11 +94,14 @@ def create_historical_data(project, customer, max_item_variety, max_item_qty, ma
 		purchase_order.schedule_date = sales_order.delivery_date
 		if (project):
 			purchase_order.project = project.name
+		# -- Handle Accounting Dimensions --
+		# purchase_order.cost_center = get_random_cost_center()
 		purchase_order.insert()
 		purchase_order.submit()
 		purchase_invoice = make_purchase_invoice(purchase_order.name)
 		purchase_invoice.set_posting_time = 1
 		purchase_invoice.posting_date = start_date
+		
 		purchase_invoice.insert()
 		purchase_invoice.save()
 		purchase_invoice.submit()
@@ -125,7 +142,7 @@ class SFSHistoricalDataGenerator(Document):
 				choice = random.choice(customers).name
 				customer = frappe.get_doc('Customer', choice)
 			rand_date = getdate(self.start_date) + timedelta(days=random.randint(0, 28))
-			create_historical_data(project, customer,self.max_item_variety, self.max_item_qty, self.markup, rand_date)
+			create_historical_data(project, customer,self.max_item_variety, self.max_item_qty, self.markup, rand_date, self.cost_center)
 
 		
 
