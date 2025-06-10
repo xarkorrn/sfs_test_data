@@ -3,7 +3,6 @@
 
 import frappe
 import random
-import time
 from frappe.utils import getdate
 from datetime import datetime, timedelta
 from frappe.model.document import Document
@@ -125,7 +124,6 @@ def create_so(customer, transaction_date=datetime.today(), desired_status='Draft
 	so.items = so_items
 	so.insert()
 
-
 class SFSPracticeData(Document):
 	def on_submit(self):
 		if int(self.po_number_to_generate) > 0:
@@ -172,3 +170,4 @@ class SFSPracticeData(Document):
 					max_so_item_qty=self.max_so_item_qty, 
 					max_so_item_variety=self.max_so_item_variety, 
 					markup=self.so_markup)
+	

@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SFS-HDG-{####}",
+ "creation": "2025-06-09 07:49:25.214269",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_tzbo",
+  "amended_from",
+  "settings_section",
+  "project_name",
+  "number_to_generate",
+  "customer",
+  "start_date",
+  "max_item_variety",
+  "max_item_qty",
+  "markup"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_tzbo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "SFS Historical Data Generator",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "settings_section",
+   "fieldtype": "Section Break",
+   "label": "Settings"
+  },
+  {
+   "default": "0",
+   "fieldname": "number_to_generate",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Number To Generate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "placeholder": "If left blank, Customers will be chosen at random..."
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "placeholder": "If left blank, no project will be created to group transactions.."
+  },
+  {
+   "default": "1",
+   "fieldname": "max_item_variety",
+   "fieldtype": "Int",
+   "label": "Max Item Variety",
+   "reqd": 1
+  },
+  {
+   "default": "100000",
+   "fieldname": "max_item_qty",
+   "fieldtype": "Int",
+   "label": "Max Item Qty",
+   "reqd": 1
+  },
+  {
+   "default": "15",
+   "fieldname": "markup",
+   "fieldtype": "Percent",
+   "label": "Markup"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-06-09 12:30:04.476913",
+ "modified_by": "Administrator",
+ "module": "SFS Test Data",
+ "name": "SFS Historical Data Generator",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}
