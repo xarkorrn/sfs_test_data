@@ -141,7 +141,7 @@ class SFSHistoricalDataGenerator(Document):
 				customers = frappe.get_all('Customer')
 				choice = random.choice(customers).name
 				customer = frappe.get_doc('Customer', choice)
-			rand_date = getdate(self.start_date) + timedelta(days=random.randint(0, 28))
+			rand_date = getdate(self.start_date)
 			create_historical_data(project, customer,self.max_item_variety, self.max_item_qty, self.markup, rand_date, self.cost_center)
 
 		
