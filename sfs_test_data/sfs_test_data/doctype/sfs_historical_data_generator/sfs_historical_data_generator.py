@@ -8,7 +8,7 @@ import random
 from frappe.model.document import Document
 from erpnext.selling.doctype.quotation.quotation import make_sales_order
 from erpnext.selling.doctype.sales_order.sales_order import make_purchase_order, make_sales_invoice, make_delivery_note
-from erpnext.accounts.doctype.payment_request.payment_request import make_payment_request, make_payment_entry
+from erpnext.accounts.doctype.payment_request.payment_request import make_payment_request
 from erpnext.buying.doctype.purchase_order.purchase_order import make_purchase_invoice, make_purchase_receipt
 
 def get_random_cost_center():
@@ -66,6 +66,7 @@ def create_historical_data(project, customer, max_item_variety, max_item_qty, ma
 		sales_invoice = make_sales_invoice(sales_order.name)
 		sales_invoice.set_posting_time = 1
 		sales_invoice.posting_date = start_date
+		sales_invoice.due_date = start_date
 		sales_invoice.insert()
 		sales_invoice.save()
 		sales_invoice.submit()
@@ -101,7 +102,8 @@ def create_historical_data(project, customer, max_item_variety, max_item_qty, ma
 		purchase_invoice = make_purchase_invoice(purchase_order.name)
 		purchase_invoice.set_posting_time = 1
 		purchase_invoice.posting_date = start_date
-		
+		purchase_invoice.due_date = start_date
+
 		purchase_invoice.insert()
 		purchase_invoice.save()
 		purchase_invoice.submit()
@@ -141,7 +143,7 @@ class SFSHistoricalDataGenerator(Document):
 				customers = frappe.get_all('Customer')
 				choice = random.choice(customers).name
 				customer = frappe.get_doc('Customer', choice)
-			rand_date = getdate(self.start_date)
+			rand_date = getdate(self.start_date) + timedelta(days=random.randint(0,int(self.max_days_from_start_date)))
 			create_historical_data(project, customer,self.max_item_variety, self.max_item_qty, self.markup, rand_date, self.cost_center)
 
 		

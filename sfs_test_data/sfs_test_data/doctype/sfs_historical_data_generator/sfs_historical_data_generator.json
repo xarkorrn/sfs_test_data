@@ -13,10 +13,12 @@
   "number_to_generate",
   "customer",
   "cost_center",
-  "start_date",
   "max_item_variety",
   "max_item_qty",
-  "markup"
+  "markup",
+  "column_break_gilr",
+  "start_date",
+  "max_days_from_start_date"
  ],
  "fields": [
   {
@@ -91,13 +93,24 @@
    "label": "Cost Center",
    "options": "Cost Center",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_gilr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "max_days_from_start_date",
+   "fieldtype": "Int",
+   "label": "Max Days From Start Date",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-06-10 12:19:03.236553",
+ "modified": "2025-06-10 13:18:08.026199",
  "modified_by": "Administrator",
  "module": "SFS Test Data",
  "name": "SFS Historical Data Generator",
