@@ -15,7 +15,9 @@ def get_random_cost_center():
 	centers = frappe.get_all('Cost Center')
 	return random.choice(centers).name
 
-def create_historical_data(project, customer, max_item_variety, max_item_qty, markup, start_date, cost_center):
+def create_historical_data(
+		project, customer, max_item_variety, max_item_qty, 
+		markup, start_date, cost_center, desired_status):
 	# Create Quote
 		quote = frappe.new_doc("Quotation")
 		quote.party_name = customer.name
@@ -75,9 +77,10 @@ def create_historical_data(project, customer, max_item_variety, max_item_qty, ma
 		# the necessary funds are there to buy materials)
 		si_pr = make_payment_request(dt='Sales Invoice', dn=sales_invoice.name, return_doc=True)
 		si_pr.submit()
-		si_payment = si_pr.create_payment_entry(submit=False)
-		si_payment.posting_date = start_date
-		si_payment.submit()
+		if desired_status != "Receivable":
+			si_payment = si_pr.create_payment_entry(submit=False)
+			si_payment.posting_date = start_date
+			si_payment.submit()
 
 		# Purchase the required items for the Sales Order
 		# find the supplier to provide items, there should only be one for
@@ -99,28 +102,34 @@ def create_historical_data(project, customer, max_item_variety, max_item_qty, ma
 		# purchase_order.cost_center = get_random_cost_center()
 		purchase_order.insert()
 		purchase_order.submit()
+		
 		purchase_invoice = make_purchase_invoice(purchase_order.name)
 		purchase_invoice.set_posting_time = 1
 		purchase_invoice.posting_date = start_date
-		purchase_invoice.due_date = start_date
 
 		purchase_invoice.insert()
+		purchase_invoice = frappe.get_doc('Purchase Invoice', purchase_invoice.name)
+		purchase_invoice.due_date = start_date
+		purchase_invoice.set_due_date()
 		purchase_invoice.save()
 		purchase_invoice.submit()
-
-		# Process payment to the supplier
-		pi_pr = make_payment_request(dt='Purchase Invoice', dn=purchase_invoice.name, return_doc = True)
-		pi_pr.submit()
-		pi_payment = pi_pr.create_payment_entry(submit=False)
-		pi_payment.posting_date = start_date
-		pi_payment.submit()
+		
+		if desired_status != "Payable":
+			# Process payment to the supplier
+			pi_pr = make_payment_request(dt='Purchase Invoice', dn=purchase_invoice.name, return_doc = True)
+			pi_pr.submit()
+			pi_payment = pi_pr.create_payment_entry(submit=False)
+			pi_payment.posting_date = start_date
+			pi_payment.submit()
 
 		# Receive items
 		po_receipt = make_purchase_receipt(purchase_order.name)
+		po_receipt.posting_date = start_date
 		po_receipt.insert()
 		po_receipt.submit()
 		# Now, delivery items to customer
 		delivery_note = make_delivery_note(sales_order.name)
+		delivery_note.posting_date = start_date
 		delivery_note.insert()
 		delivery_note.submit()
 
@@ -143,8 +152,14 @@ class SFSHistoricalDataGenerator(Document):
 				customers = frappe.get_all('Customer')
 				choice = random.choice(customers).name
 				customer = frappe.get_doc('Customer', choice)
+			desired_status = self.desired_status
+			if desired_status == 'Random':
+				choices = ["Complete", "Payable", "Receivable"]
+				random.shuffle(choices)
+				desired_status = choices.pop()
 			rand_date = getdate(self.start_date) + timedelta(days=random.randint(0,int(self.max_days_from_start_date)))
-			create_historical_data(project, customer,self.max_item_variety, self.max_item_qty, self.markup, rand_date, self.cost_center)
+			create_historical_data(project, customer,self.max_item_variety, self.max_item_qty, 
+						  self.markup, rand_date, self.cost_center, desired_status)
 
 		
 

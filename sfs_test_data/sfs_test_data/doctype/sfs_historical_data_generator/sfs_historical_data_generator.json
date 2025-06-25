@@ -16,6 +16,7 @@
   "max_item_variety",
   "max_item_qty",
   "markup",
+  "desired_status",
   "column_break_gilr",
   "start_date",
   "max_days_from_start_date"
@@ -104,14 +105,22 @@
    "fieldtype": "Int",
    "label": "Max Days From Start Date",
    "reqd": 1
+  },
+  {
+   "default": "Complete",
+   "fieldname": "desired_status",
+   "fieldtype": "Select",
+   "label": "Desired Status",
+   "options": "Complete\nPayable\nReceivable\nRandom",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-06-10 13:18:08.026199",
- "modified_by": "Administrator",
+ "modified": "2025-06-24 12:25:12.933317",
+ "modified_by": "oblackstock@sfsrolls.com",
  "module": "SFS Test Data",
  "name": "SFS Historical Data Generator",
  "naming_rule": "Expression",
