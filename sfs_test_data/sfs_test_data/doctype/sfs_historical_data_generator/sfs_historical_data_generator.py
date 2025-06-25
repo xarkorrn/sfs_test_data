@@ -103,18 +103,19 @@ def create_historical_data(
 		purchase_order.insert()
 		purchase_order.submit()
 		
-		purchase_invoice = make_purchase_invoice(purchase_order.name)
-		purchase_invoice.set_posting_time = 1
-		purchase_invoice.posting_date = start_date
-
-		purchase_invoice.insert()
-		purchase_invoice = frappe.get_doc('Purchase Invoice', purchase_invoice.name)
-		purchase_invoice.due_date = start_date
-		purchase_invoice.set_due_date()
-		purchase_invoice.save()
-		purchase_invoice.submit()
+		
 		
 		if desired_status != "Payable":
+			purchase_invoice = make_purchase_invoice(purchase_order.name)
+			purchase_invoice.set_posting_time = 1
+			purchase_invoice.posting_date = start_date
+
+			purchase_invoice.insert()
+			purchase_invoice = frappe.get_doc('Purchase Invoice', purchase_invoice.name)
+			purchase_invoice.due_date = start_date
+			purchase_invoice.set_due_date()
+			purchase_invoice.save()
+			purchase_invoice.submit()
 			# Process payment to the supplier
 			pi_pr = make_payment_request(dt='Purchase Invoice', dn=purchase_invoice.name, return_doc = True)
 			pi_pr.submit()
